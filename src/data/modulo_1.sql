@@ -11,7 +11,7 @@ CREATE SCHEMA in_process;
 
 -- Creación de la tabla de asignaturas
 CREATE TABLE in_process.asignaturas (
-    ID SERIAL PRIMARY KEY,
+    ID_ASIGNATURA SERIAL PRIMARY KEY,
     AREA_PRINCIPAL VARCHAR(50),
     SUB_AREA VARCHAR(100),
     NOMBRE_ASIGNATURA VARCHAR(100)
