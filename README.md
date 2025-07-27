@@ -14,3 +14,5 @@ Desarrollo de modelos predictivos de deserción universitaria basados en técnic
 Por cuestiones de privacidad con la universidad , no se encontraran archivos que contengan los datos utilizados para el proyecto, pero puede revisar la documentacion para seguir el flujo de trabajo llevado a cabo.
 
 [💾 Ir a la documentacion de la base de datos](https://dbdocs.io/anfehumu2.0/Unicatolica)
+
+[💿 Ir a la documentacion del proyecto]()
