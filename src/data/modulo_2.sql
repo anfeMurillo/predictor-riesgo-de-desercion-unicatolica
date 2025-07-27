@@ -8,9 +8,23 @@ Se crea la tabla de estudiantes de la carrera que quieras evaluar.
 
 */
 
+/*
+
+REQUISITOS
+
+|          Campo         | Tipo de valor esperado | 
+|------------------------|------------------------|
+|ID_ESTUDIANTE           | ENTERO                 |
+|PERIODO_INICIO          | ENTERO                 |
+|EDAD                    | ENTERO                 |
+|ESTADO_CIVIL            | TEXTO                  |
+|GENERO                  | TEXTO                  |
+|RESIDENCIA              | TEXTO                  |
+|ESTRATO                 | ENTERO                 |
+*/
+
 CREATE TABLE in_process.estudiantes AS (
-    SELECT m.* FROM materias_inscritas m
-    INNER JOIN estudiantes_unis e ON e.id_estudiante = m.codigo_id
+    SELECT * FROM materias_inscritas
 )
 
 -- [Codificacion]
