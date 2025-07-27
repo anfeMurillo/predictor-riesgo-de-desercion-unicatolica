@@ -3,13 +3,13 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Modelos predictivos de desercion universitaria Unicatolica documentation
+Modelos predictivos de deserción estudiantil – Unicatólica
 ========================================================================
 
-Add your content using ``reStructuredText`` syntax. See the
-`reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
-documentation for details.
-
+.. image:: _static/images/logo_unicatolica.png
+   :alt: Logo del proyecto
+   :align: center
+   :width: 300px
 
 .. toctree::
    :maxdepth: 2
