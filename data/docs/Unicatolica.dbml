@@ -1,0 +1,380 @@
+Project "Unicatolica" {
+  database_type: ''
+  note: '''
+    # Bienvenid@ a la documentación del conjunto de datos de Unicatólica
+    
+    ### Propósito  
+    
+    En esta página encontrarás la documentación detallada de los **datos crudos** y **datos transformados** utilizados en el proyecto de ciencia de datos para la **detección de la deserción universitaria** en la *Fundación Católica Lumen Gentium*.  Los datos se encuentran entre un periodo de tiempo desde el 2018 hasta el 2024.
+    
+    Cada columna del conjunto de datos cuenta con una descripción que explica su **contenido**, **tratamiento** y **relevancia** dentro del desarrollo del proyecto.
+    
+    🪨 Las tablas en el esquema **public** son los datos en bruto extraídos del excel como fuente primaria y montados en PostgreSQL.
+    
+    ⚠️ **Notas Finales** se descartó debido a que no proporcionaba información diferente a la que se podría encontrar en **Materias Inscritas**.
+    
+    ### Herramientas utilizadas
+    
+    | Herramienta | Propósito |
+    |--------------------|----------------|
+    | Excel              | Datos de origen en un archivo de excel, se exporto cada hoja como un archivo CSV. |
+    | Data Grip | Se importaron los datos a la base de datos de Postgres usando esta herramienta. |
+    | PostgreSQL | Se montaron los datos en una base de datos llamada **universidad** en el esquema **public**. |
+  '''
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Table "estudiantes_unis" {
+  "id_estudiante" integer [note: '''
+    | Descripción                                                                      | Valores / Ejemplo | Transformaciones | Uso en el proyecto | Anomalías |
+    |---------------------------------------------------------------------------|-------------------------|----------------------------|----------------------------|-------------------|
+    | Identificador único de la persona.                                | 123987                 | Anonimizado          | Feature principal   | Ninguna       |
+  ''']
+
+  "NOMBRE ESTUDIANTE" text [note: '''
+    | Descripción                                                                      | Valores / Ejemplo | Transformaciones | Uso en el proyecto | Anomalías |
+    |---------------------------------------------------------------------------|-------------------------|----------------------------|----------------------------|-------------------|
+    | Nombre de la persona.                                                   | JUAN PEREZ/GOMEZ       | Eliminado          | Descartado   | Ninguna       |
+  ''']
+
+  "periodo_catalogo" integer [note: '''
+    | Descripción                                                                      | Valores / Ejemplo | Transformaciones | Uso en el proyecto | Anomalías |
+    |---------------------------------------------------------------------------|-------------------------|----------------------------|----------------------------|-------------------|
+    | Año y semestre de entrada de un estudiante.                                | 202410, 202420                 | Normalización         | Feature    | Si       |
+    
+    
+    ### Anomalía ⚠️
+    Valores mal insertados:
+    | Valor actual | Valor esperado |
+    |-----------|------------------|
+    | 202201 | 202210 |
+    |202301 | 202310 |
+  ''']
+
+  "periodo_fin" integer [note: '''
+    | Descripción                                                                      | Valores / Ejemplo | Transformaciones | Uso en el proyecto | Anomalías |
+    |---------------------------------------------------------------------------|-------------------------|----------------------------|----------------------------|-------------------|
+    | Año y semestre de salida de un estudiante.                                | 202410, 202420                 | Eliminado        | Descartado    | Si       |
+    
+    
+    ### Anomalía ⚠️
+    1. La gran mayoría de los valores son 9999999, posiblemente debido a un problema de la configuración del programa original.
+    2. Los pocos estudiantes que no presentan la anomalía anterior presentan valores iguales o cercanos a los de entrada, y son la minoria de los casos, por lo tanto, se descartara este campo.
+  ''']
+
+  "programa" text [note: '''
+    | Descripción                                                                      | Valores / Ejemplo | Transformaciones | Uso en el proyecto | Anomalías |
+    |---------------------------------------------------------------------------|-------------------------|----------------------------|----------------------------|-------------------|
+    | Código del programa académico.                                | UNIS                 | Eliminado        | Descartado    | NO       |
+    
+    ### Nota 📝
+    1. Todos los valores en este caso tienen el mismo código, debido a que solo se proporcionó los datos de los estudiantes de la facultad de ingeniería en sistemas.
+  ''']
+
+  "DESCRIPCI�N PROGRAMA" text [note: '''
+    | Descripción                                                                      | Valores / Ejemplo | Transformaciones | Uso en el proyecto | Anomalías |
+    |---------------------------------------------------------------------------|-------------------------|----------------------------|----------------------------|-------------------|
+    | Descripción del programa académico.                                | INGENIER�A DE SISTEMAS UNICATO                 | Eliminado        | Descartado    | NO       |
+    
+    ### Nota 📝
+    1. Todos los valores en este caso tienen el mismo código, debido a que solo se proporcionó los datos de los estudiantes de la facultad de ingeniería en sistemas.
+  ''']
+
+  "sede_programa" text [note: '''
+    | Descripción                                                                      | Valores / Ejemplo | Transformaciones | Uso en el proyecto | Anomalías |
+    |---------------------------------------------------------------------------|-------------------------|----------------------------|----------------------------|-------------------|
+    | Sede del programa universitario                                | CAL                 | Eliminado        | Descartado    | NO       |
+    
+    ### Nota 📝
+    1. Todos los valores en este caso tienen el mismo código referente a Cali.
+  ''']
+
+  "sorlcur_priority_no" integer [note: '''
+    | Descripción                                                                      | Valores / Ejemplo | Transformaciones | Uso en el proyecto | Anomalías |
+    |---------------------------------------------------------------------------|-------------------------|----------------------------|----------------------------|-------------------|
+    | No se tiene información sobre este campo.                                | 1,2                | Eliminado        | Descartado    | NO       |
+    
+    ### Nota 📝
+    1. La gran mayoría de valores tienen el valor de 1, y hay una minoría que tiene el valor de 2, Para este estudio no se tendrá en cuenta.
+  ''']
+
+  "edad" integer [note: '''
+    | Descripción                                                                      | Valores / Ejemplo | Transformaciones | Uso en el proyecto | Anomalías |
+    |---------------------------------------------------------------------------|-------------------------|----------------------------|----------------------------|-------------------|
+    | Edad de la persona.                                | 24,27,32                 | Ninguno        | Feature    | NO       |
+  ''']
+
+  "desc_estado_civil" text [note: '''
+    | Descripción                                                                      | Valores / Ejemplo | Transformaciones | Uso en el proyecto | Anomalías |
+    |---------------------------------------------------------------------------|-------------------------|----------------------------|----------------------------|-------------------|
+    | Estado civil de la persona.                                | Casad(a), U Libre, Soltero(a)                 | Codificado        | Feature    | Si       |
+    
+    | Valor actual | Valor codificado |
+    |-------------------|-------------------------|
+    | Casado(a) | 2 |
+    | U Libre | 1 |
+    | Soltero(a) | 0 |
+    
+    ### Anomalía ⚠️
+    1. Hay dos valores con 0, Se convertirán a la media de los datos que es 1.
+  ''']
+
+  "genero" text [note: '''
+    | Descripción                                                                      | Valores / Ejemplo | Transformaciones | Uso en el proyecto | Anomalías |
+    |---------------------------------------------------------------------------|-------------------------|----------------------------|----------------------------|-------------------|
+    | Identidad de género de la persona.                                | F , M ,  N               | Codificación        | Feature    | No       |
+    
+    | Valor actual |Descripción| Valor codificado |
+    |-------------------|------------------|-------------------------|
+    | F | Femenino | 2 |
+    | M | Masculino | 1 |
+    | N | No binario | 0 |
+  ''']
+
+  "residencia" text [note: '''
+    | Descripción                                                                      | Valores / Ejemplo | Transformaciones | Uso en el proyecto | Anomalías |
+    |---------------------------------------------------------------------------|-------------------------|----------------------------|----------------------------|-------------------|
+    | Residencia de la persona.                                | Cali, Yumbo, Jamundí                 | Codificado        | Feature    | Si       |
+    
+    ![mapa](https://upload.wikimedia.org/wikipedia/commons/5/55/Mapa_de_Valle_del_Cauca_%28pol%C3%ADtico%29.svg)
+    
+    ### Nota 📝
+    Para este proyecto se dividirán los sitios de residencia por tres grupos:
+    | Grupo | Lugares | Valor codificados |
+    |-----------|-------------|--------------------------| 
+    | Ciudad |Cali | 0 |
+    |Zona Aledaña | Jamundí, Candelaria, Yumbo, Palmira, Dagua| 1 |
+    | Zona Distante | Todo lugar distinto a los otros dos | 2 |
+    
+    ### Anomalía ⚠️
+    Hay inconsistencia en los nombres de las residencias.
+    | Valor actual       | Valor codificado |
+    |-----------------------|--------------------------|
+    | Bogot�                | 2 |
+    | Buenaventura          | 2 |
+    | Buenos Aires          | 2 |
+    | Cali                  | 0 |
+    | CALI                  | 0 |
+    | Santiago de Cali      | 0 |
+    | CALOTO                | 2 |
+    | Candelaria            | 1 |
+    | CANDELARIA            | 1 |
+    | DAGUA                 | 1 |
+    | El Rosario (Nar)      | 2 |
+    | EL TAMBO              | 2 |
+    | FLORIDA               | 2 |
+    | Jamund�               | 1 |
+    | JAMUNDÍ               | 1 |
+    | jamundi - terranova   | 1 |
+    | MANIZALES             | 2 |
+    | NARIÑO                | 2 |
+    | palmira               | 1 |
+    | PALMIRA               | 1 |
+    | PASTO                 | 2 |
+    | POPAY�N               | 2 |
+    | PUERTO ASÍS           | 2 |
+    | Puerto Tejada         | 2 |
+    | PUERTO TEJADA         | 2 |
+    | SAN ANDRES DE TUMACO  | 2 |
+    | Yumbo                 | 1 |
+    | YUMBO                 | 1 |
+  ''']
+
+  "estrato" text [note: '''
+    | Descripción                                                                      | Valores / Ejemplo | Transformaciones | Uso en el proyecto | Anomalías |
+    |---------------------------------------------------------------------------|-------------------------|----------------------------|----------------------------|-------------------|
+    | Sistema de clasificación de las viviendas y su entorno de Colombia. | 0, 1, 2, 3, 4, 5, 6 | Ninguna        | Feature    | Si       |
+    
+    ### Anomalías ⚠️
+    El estrato 0 no existe oficialmente, posiblemente signifique en este caso que la persona no sabía su clasificación, se le normalizara a al promedio de los datos.
+    
+    | Valor actual |Descripción|
+    |-------------------|------------------
+    | 0 | No sabe su clasificación |
+    | 1 | Muy bajo |
+    | 2 | Bajo |
+    | 3 | Medio bajo |
+    | 4 | Bajo |
+    | 5 | Medio bajo |
+    | 6 | Alto |
+  ''']
+
+  note: '''
+    ### 🪨 Datos en bruto de la información personal.
+    
+    Esta documentación describe el conjunto de datos que contiene la información personal de los estudiantes de la Universidad. El propósito de esta guía es doble:
+    
+    1. Detallar las inconsistencias: Los datos en su estado bruto contienen errores, duplicados y formatos no estandarizados. Este documento identifica y explica estas anomalías para que los usuarios puedan manejarlas correctamente y evitar fallos en sus análisis.
+    2. Establecer las normas de uso: Se definen los propósitos para los cuales estos datos pueden ser utilizados.
+  '''
+}
+
+
+Table "materias_inscritas" {
+  "nombres" text [note: '''
+    | Descripción                                                                      | Valores / Ejemplo | Transformaciones | Uso en el proyecto | Anomalías |
+    |---------------------------------------------------------------------------|-------------------------|----------------------------|----------------------------|-------------------|
+    | Nombre de la persona.                                                   | JUAN PEREZ/GOMEZ       | Eliminado          | Descartado   | Ninguna       |
+    
+    ### Nota 📝
+    
+    1. Debería llamarse "NOMBRE ESTUDIANTE" para estar normalizado
+  ''']
+
+  "codigo_id" text [note: '''
+    | Descripción                                                                      | Valores / Ejemplo | Transformaciones | Uso en el proyecto | Anomalías |
+    |---------------------------------------------------------------------------|-------------------------|----------------------------|----------------------------|-------------------|
+    | Identificador único de la persona.                                | 123987                 | Anonimizado          | Feature principal   | Si       |
+    
+    #### Anomalías ⚠️
+    
+    1. Se encuentras valores alfanuméricos debido a la nomenclatura antigua que seguía la universidad.
+    2. Debería llamarse id_estudiante para estar normalizado.
+  ''']
+
+  "tipo_estudiante" text [note: '''
+    | Descripción                                                                      | Valores / Ejemplo | Transformaciones | Uso en el proyecto | Anomalías |
+    |---------------------------------------------------------------------------|-------------------------|----------------------------|----------------------------|-------------------|
+    | Código de estado en el que estaba la persona al momento de inscribir un curso. | B, C, M | Codificado | Feature   | No       |
+    
+    | Valor actual | Descripción estado | Valor codificado |
+    |-------------------|-------------------|-------------------------|
+    | B | Doble Programa | 0 |
+    | C | Continuo | 1 |
+    | E | Transferencia externa | 2 |
+    | G | Reintegro | 3 |
+    | I |Transferencia interna | 4 |
+    | M | Movilidad entrante | 5 |
+    | N | Nuevo | 6 |
+    | P | C Propedeutico | 7 |
+    | R | Reingreso | 8 |
+    | S | Movilidad saliente | 9|
+  ''']
+
+  "descripcion_estado" text [note: '''
+    | Descripción                                                                      | Valores / Ejemplo | Transformaciones | Uso en el proyecto | Anomalías |
+    |---------------------------------------------------------------------------|-------------------------|----------------------------|----------------------------|-------------------|
+    | Código de estado en el que estaba la persona al momento de inscribir un curso. | Continuo, Nuevo | Eliminado | Desestimado | No       |
+  ''']
+
+  "tipo_documento" text [note: '''
+    | Descripción                                                                      | Valores / Ejemplo | Transformaciones | Uso en el proyecto | Anomalías |
+    |---------------------------------------------------------------------------|-------------------------|----------------------------|----------------------------|-------------------|
+    | Tipo de documento de identidad de la persona.                                                   | CC | Eliminado          | Descartado   | Ninguna|
+  ''']
+
+  "num_documento" text [note: '''
+    | Descripción                                                                      | Valores / Ejemplo | Transformaciones | Uso en el proyecto | Anomalías |
+    |---------------------------------------------------------------------------|-------------------------|----------------------------|----------------------------|-------------------|
+    | Documento de identidad de la persona.                                                   | 110199988       | Eliminado          | Descartado   | Ninguna|
+  ''']
+
+  "periodo" text [note: '''
+    | Descripción                                                                      | Valores / Ejemplo | Transformaciones | Uso en el proyecto | Anomalías |
+    |---------------------------------------------------------------------------|-------------------------|----------------------------|----------------------------|-------------------|
+    | Año y semestre de entrada de un estudiante.                                | 202410, 202420                 | Normalización         | Feature    | Si       |
+    
+    | Periodos | Semestre del año |
+    |--------------|-------------------------|
+    |201810|1ro|
+    |201860|2do|
+    |201910|1ro|
+    |201960|2do
+    |202010|1ro|
+    |202060|2do|
+    |202110|1ro|
+    |202160|2do|
+    |202210|1ro|
+    |202220|2do|
+    |202310|1ro|
+    |202320|2do|
+    |202410|1ro|
+    |202420|2do|
+  ''']
+
+  "parte_periodo" text [note: '''
+    | Descripción                                                                      | Valores / Ejemplo | Transformaciones | Uso en el proyecto | Anomalías |
+    |---------------------------------------------------------------------------|-------------------------|----------------------------|----------------------------|-------------------|
+    | Año y semestre de entrada de un estudiante.                                | 802                 | Eliminado | Desestimado   | Si       |
+    
+    ### Anomalía ⚠️
+    No se está claro la forma en que se determina la parte del periodo en esta tabla, la gran mayoría de registros tienen el valor 802 y unos cuantos pocos un valor distinto.
+    |Valores|
+    |-----------|
+    |802|
+    |C|
+    |G|
+    |H|
+    |P|
+  ''']
+
+  "descripcion_parte_periodo" text
+  "nrc" text
+  "codigo_materia" text
+  "asignatura_descripcion" text
+  "creditos_asignatura" text
+  "intensidad_horaria" text
+  "fecha_inscripcion" text
+  "cod_status" text
+  "status_registro" text
+  "codigo_docente" text
+  "nombre_docente" text
+  "cod_sede_materia" text
+  "sede_materia" text
+  "creditos_inscritos" text
+  "creditos_asignados" text
+  "nota_parcial" text
+  "NOTA_PARCIAL.1" text
+  "NOTA FINAL" text
+  note: '''
+    ### 🪨 Datos en bruto de las materias inscritas por el estudiante  
+    
+    Esta documentación describe el conjunto de datos que contiene la información de las materias inscritas por los estudiantes de la Universidad. El propósito de esta guía es doble:  
+    
+    1. **Detallar las inconsistencias:**  
+       Los datos en su estado bruto pueden presentar errores, materias duplicadas, registros incompletos o formatos no estandarizados (por ejemplo, códigos de materia mal escritos o semestres inconsistentes). Este documento identifica y explica estas anomalías para que los usuarios puedan tratarlas adecuadamente y evitar problemas en sus análisis.  
+    
+    2. **Establecer las normas de uso:**  
+       Se especifican los propósitos para los cuales estos datos pueden ser utilizados, como análisis de carga académica, proyección de matrícula o estudios de deserción, garantizando siempre el uso responsable y ético de la información.  
+  '''
+}
+
+
+Table "pga" {
+  "periodo_academico" integer
+  "pidm_estudiante" integer
+  "id_estudiante" text [note: '''
+    | Descripción                                                                      | Valores / Ejemplo | Transformaciones | Uso en el proyecto | Anomalías |
+    |---------------------------------------------------------------------------|-------------------------|----------------------------|----------------------------|-------------------|
+    | Identificador único de la persona.                                | 123987                 | Anonimizado          | Feature principal   | Si       |
+    
+    #### Anomalías ⚠️
+    
+    1. Se encuentras valores alfanuméricos debido a la nomenclatura antigua que seguía la universidad. 
+  ''']
+
+  "NOMBRE ESTUDIANTE" text [note: '''
+    | Descripción                                                                      | Valores / Ejemplo | Transformaciones | Uso en el proyecto | Anomalías |
+    |---------------------------------------------------------------------------|-------------------------|----------------------------|----------------------------|-------------------|
+    | Identificador único de la persona.                                | 123987                 | Anonimizado          | Feature principal   | Ninguna       |
+  ''']
+
+  "Suma de HORAS_CALIDAD" text
+  "Suma de PUNTOS_CALIDAD" text
+  "pga" text
+  "pga_general" text
+}
