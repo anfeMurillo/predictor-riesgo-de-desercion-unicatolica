@@ -1,11 +1,27 @@
 --[MODULO 3 U]
+
 /*
- [Advertencia]: Esto es solo si esta usando una base de datos parecida a la utilizada a la fecha de creacion de este proyecto.
- Si su base de datos de Unicatolica ya ha corregido la alta variacion de los nombres, utilice el modo normal.
- Se normalizara semanticamente la informacion de las asignaturas para corregir la alta variacion en sus nombres.
- 
- [Si ha agregado alguna materia nueva o con un nombre diferente, tengalo en cuenta y añadalo aqui]
- */
+⚠️ ADVERTENCIA IMPORTANTE ⚠️
+
+Este script ha sido diseñado para trabajar exclusivamente con la versión de la base de datos 
+utilizada en la creación de este proyecto. Se asume que dicha base de datos mantiene las mismas 
+inconsistencias, errores y variaciones detectadas en ese momento.
+
+Si su base de datos ha sido actualizada o corregida (por ejemplo, se unificaron los nombres 
+de las asignaturas o se ajustaron estructuras), utilice el MODO NORMAL, ya que este script 
+podría generar resultados inconsistentes.
+
+Para más detalles sobre:
+  - Los problemas conocidos en la base de datos original.
+  - La estructura del dataset esperado.
+  - Las soluciones y normalizaciones aplicadas.
+
+Consulte la documentación oficial en:
+https://dbdocs.io/anfehumu2.0/Unicatolica
+
+✅ NOTA: Si ha agregado nuevas asignaturas o modificado sus nombres, 
+revise y actualice las reglas de normalización antes de ejecutar este script.
+*/
 
 -- [Normalizacion semantica]
 

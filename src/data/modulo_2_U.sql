@@ -1,19 +1,29 @@
 -- [Modulo 2 U]
 
--- Creacion de la tabla estudiantes
-
 /*
-[Importante]: Esta implementacion es unica si estas utilizando una base de datos identica a
-la utilizada en la creacion de este proyecto en el año 2025, ya que corrige errores encontrados.
+⚠️ ADVERTENCIA IMPORTANTE ⚠️
 
-Para saber mas sobre dichos problemas visita la documentacion
+Este script ha sido diseñado para trabajar exclusivamente con la versión de la base de datos 
+utilizada en la creación de este proyecto. Se asume que dicha base de datos mantiene las mismas 
+inconsistencias, errores y variaciones detectadas en ese momento.
 
+Si su base de datos ha sido actualizada o corregida (por ejemplo, se unificaron los nombres 
+de las asignaturas o se ajustaron estructuras), utilice el MODO NORMAL, ya que este script 
+podría generar resultados inconsistentes.
+
+Para más detalles sobre:
+  - Los problemas conocidos en la base de datos original.
+  - La estructura del dataset esperado.
+  - Las soluciones y normalizaciones aplicadas.
+
+Consulte la documentación oficial en:
 https://dbdocs.io/anfehumu2.0/Unicatolica
 
-Determina materias obligatorias del programa [Ingenieria en Sistemas]
+✅ NOTA: Determina materias obligatorias del programa [Ingenieria en Sistemas]
 para asegurar que los estudiantes pertenezcan a este.
-
 */
+
+-- Creacion de la tabla estudiantes
 
 CREATE TABLE in_process.estudiantes AS (
 
