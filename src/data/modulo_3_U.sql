@@ -370,5 +370,5 @@ SELECT DISTINCT CODIGO_ID AS ID_ESTUDIANTE, TIPO_ESTUDIANTE, PERIODO,ASIGNATURA_
 -- [Creacion de la tabla in_process.creditos_por_periodo]
 
 CREATE TABLE in_process.creditos_por_periodo AS (
-SELECT DISTINCT CODIGO_ID AS ID_ESTUDIANTE,PERIODO, CREDITOS_INSCRITOS FROM materias_inscritas m
+SELECT DISTINCT CODIGO_ID::int8 AS ID_ESTUDIANTE,PERIODO, CREDITOS_INSCRITOS FROM materias_inscritas m
     INNER JOIN in_process.estudiantes i ON i.id_estudiante = m.codigo_id::int8);

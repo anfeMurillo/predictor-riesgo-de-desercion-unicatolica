@@ -1,8 +1,12 @@
 -- [ Modulo 1 ]
 
 /*
- Aui puedes adaptar el AREA_PRINCIPAL , el SUB_AREA y el NOMBRE_ASIGNATURA manualmente
- en el caso que alguna asignatura halla cambiado.
+
+🛠️ FUNCIONAMIENTO 🛠️
+Aquí puede ajustar manualmente el 
+AREA_PRINCIPAL, SUB_AREA y NOMBRE_ASIGNATURA 
+en caso de que alguna asignatura haya sido modificada o cambiara su denominación.
+
 */
 
 -- Crear el esquema in_process
