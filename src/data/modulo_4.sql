@@ -101,5 +101,5 @@ WITH b AS (
                 WHEN creditos_inscritos > 0 THEN 3
                 WHEN periodos_aplazados IN (1,2) THEN 4
                 END
-            )
+            ) AS estado_final
     FROM b;
