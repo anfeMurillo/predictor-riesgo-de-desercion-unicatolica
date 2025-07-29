@@ -105,7 +105,7 @@ Fuera del alcance
 El proyecto no contempla la implementación directa de las estrategias de intervención ni el análisis de programas académicos fuera o dentro del área de ingeniería.
 
 3. Audiencia y Partes Interesadas
-==============================
+=================================
 
 Audiencia principal
 -------------------
@@ -127,7 +127,7 @@ Stakeholders Clave
    :caption: Contents:
 
 4. Estructura del repositorio
-==========================
+=============================
 
 📂 predictor-riesgo-desercion
 ------------------------------
@@ -181,3 +181,205 @@ Carpeta donde se colocan los datos originales para ser procesados.
 ^^^^^^^^
 
 Carpeta generada con Sphinx para la creacion de esta documentacion.
+
+
+📁 models
+~~~~~~~~~~
+
+Modelos entrenados y versionados.
+
+
+📁 notebooks
+~~~~~~~~~~~~~
+
+Notebooks para la experimentacion en la creacion de los modelos.
+
+
+📁 reports
+~~~~~~~~~~~~
+
+Reportes creados por los modelos al predecir la deserción de los estudiantes.
+
+
+📁 src
+~~~~~~~
+
+Codigo principal de pipeline para la recoleccion , extructuracion de los datos , el entrenamiento , ejecucion de los modelos y la generacion de los reportes.
+
+📁 data
+^^^^^^^^
+
+Contiene los scripts SQL para la extraccion y transformacion de datos desde la base de datos.
+
+📁 features
+^^^^^^^^^^^
+
+Scripts para la ingenieria de caracteristicas y preprocesamiento de datos.
+
+📁 models
+^^^^^^^^^
+
+Scripts para el entrenamiento, evaluacion y serializacion de los modelos de machine learning.
+
+📁 visualization
+^^^^^^^^^^^^^^^^
+
+Scripts para la generacion de graficos y visualizaciones de los resultados.
+
+5. Metodología y Enfoque
+========================
+
+Metodología CRISP-DM
+--------------------
+
+Este proyecto sigue la metodología **CRISP-DM** (Cross Industry Standard Process for Data Mining), que consta de las siguientes fases:
+
+1. **Comprensión del Negocio**
+   - Definición del problema de deserción estudiantil
+   - Establecimiento de objetivos y criterios de éxito
+   - Identificación de stakeholders y recursos disponibles
+
+2. **Comprensión de los Datos**
+   - Recolección de datos académicos, socioeconómicos e institucionales
+   - Análisis exploratorio inicial
+   - Evaluación de calidad y completitud de los datos
+
+3. **Preparación de los Datos**
+   - Limpieza y transformación de datos
+   - Ingeniería de características
+   - Integración de múltiples fuentes de datos
+
+4. **Modelado**
+   - Selección de técnicas de modelado apropiadas
+   - Entrenamiento de múltiples algoritmos
+   - Optimización de hiperparámetros
+
+5. **Evaluación**
+   - Evaluación de modelos con métricas relevantes
+   - Validación con datos de prueba
+   - Revisión del cumplimiento de objetivos de negocio
+
+6. **Despliegue**
+   - Documentación de resultados
+   - Recomendaciones para implementación
+   - Plan de monitoreo y mantenimiento
+
+Tecnologías Utilizadas
+----------------------
+
+**Lenguajes de Programación**
+   - Python 3.x para análisis de datos y machine learning
+   - SQL para extracción y transformación de datos
+
+**Librerías y Frameworks**
+   - **Pandas**: Manipulación y análisis de datos
+   - **NumPy**: Operaciones numéricas
+   - **Scikit-learn**: Algoritmos de machine learning
+   - **Matplotlib/Seaborn**: Visualización de datos
+   - **Jupyter Notebooks**: Experimentación y prototipado
+
+**Base de Datos**
+   - PostgreSQL para almacenamiento de datos
+
+**Documentación**
+   - Sphinx para generación de documentación
+   - reStructuredText como formato de documentación
+
+6. Modelos Implementados
+========================
+
+Regresión Logística
+-------------------
+
+**Descripción**
+   Modelo estadístico utilizado para problemas de clasificación binaria. Ideal para este caso de uso debido a su interpretabilidad y capacidad de proporcionar probabilidades de deserción.
+
+**Ventajas**
+   - Alta interpretabilidad de coeficientes
+   - Rápido entrenamiento y predicción
+   - Proporciona probabilidades calibradas
+   - Robusto ante outliers
+
+**Implementación**
+   Ubicado en: ``notebooks/regresion_logistica.ipynb``
+
+.. note::
+   Se configuró con ``max_iter=1000`` para asegurar convergencia del algoritmo de optimización.
+
+Modelos Futuros
+---------------
+
+Se planea implementar los siguientes modelos para comparar rendimiento:
+
+- **Random Forest**: Para capturar relaciones no lineales
+- **Gradient Boosting**: Para optimizar métricas específicas
+- **Support Vector Machine**: Para casos con datos de alta dimensionalidad
+- **Redes Neuronales**: Para patrones complejos en los datos
+
+7. Resultados y Métricas
+========================
+
+Métricas de Evaluación
+----------------------
+
+Para evaluar el rendimiento de los modelos se utilizan las siguientes métricas:
+
+**Precisión (Precision)**
+   Proporción de predicciones positivas que fueron correctas. Importante para minimizar falsas alarmas.
+
+**Recall (Sensibilidad)**
+   Proporción de casos positivos reales que fueron identificados correctamente. Crítico para no perder estudiantes en riesgo.
+
+**F1-Score**
+   Media armónica entre precisión y recall. Métrica balanceada para evaluación general.
+
+**Accuracy**
+   Proporción total de predicciones correctas.
+
+**AUC-ROC**
+   Área bajo la curva ROC. Mide la capacidad del modelo de distinguir entre clases.
+
+.. important::
+   Dado el contexto del problema, se prioriza el **Recall** sobre la **Precisión**, ya que es preferible identificar a todos los estudiantes en riesgo (incluso con algunos falsos positivos) que perder casos reales de deserción.
+
+8. Conclusiones y Recomendaciones
+=================================
+
+Conclusiones Principales
+------------------------
+
+1. **Factibilidad Técnica**: Los modelos predictivos son viables para identificar estudiantes en riesgo de deserción con los datos disponibles.
+
+2. **Importancia de Datos**: La calidad y completitud de los datos académicos y socioeconómicos son fundamentales para el éxito del modelo.
+
+3. **Interpretabilidad**: La regresión logística proporciona insights valiosos sobre los factores más influyentes en la deserción.
+
+
+9. Referencias y Recursos Adicionales
+=====================================
+
+Documentación Técnica
+---------------------
+
+- `Scikit-learn Documentation <https://scikit-learn.org/stable/>`_
+- `Pandas Documentation <https://pandas.pydata.org/docs/>`_
+- `PostgreSQL Documentation <https://www.postgresql.org/docs/>`_
+
+Literatura Académica
+--------------------
+
+- Metodología CRISP-DM para proyectos de minería de datos
+- Estudios sobre factores de deserción en educación superior
+- Técnicas de machine learning para predicción educativa
+
+Contacto y Soporte
+------------------
+
+Para consultas técnicas o académicas sobre este proyecto:
+
+- **Desarrollador Principal**: Andres Felipe Murillo
+- **Institución**: Fundación Universitaria Católica Lumen Gentium
+- **Semillero**: Ciencia de Datos y Machine Learning
+
+.. note::
+   Esta documentación es un documento vivo que se actualiza conforme evoluciona el proyecto.
