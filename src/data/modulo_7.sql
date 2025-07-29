@@ -28,3 +28,14 @@ ORDER BY id_estudiante;
 
 UPDATE in_process.estado_final_estudiantes SET estado_final = 2
 WHERE estado_final IS NULL ;
+
+CREATE SCHEMA processed;
+
+CREATE TABLE processed.data_set AS
+WITH a AS (
+SELECT * FROM in_process.estudiantes
+INNER JOIN in_process.union_final USING (id_estudiante))
+
+SELECT * FROM a
+INNER JOIN in_process.estado_final_estudiantes USING (id_estudiante)
+ORDER BY id_estudiante,periodo_inicio;
