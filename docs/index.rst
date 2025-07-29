@@ -122,10 +122,6 @@ Stakeholders Clave
    3. Docente del semillero Ciencia de Datos y ML. 
 
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
-
 4. Estructura del repositorio
 =============================
 
@@ -172,7 +168,7 @@ Carpeta donde se guardan los archivos una vez procesados para su utilizacion.
 
 Carpeta donde se colocan los datos originales para ser procesados.
 
-.. note::
+.. important:: 
    1. Se deben colocar los datos en una base de datos para posterioremente conectarse a ella, para la creacion de este proyecto se utilizo PostgreSQL.
    2. Importante no usar la base de datos que esta en produccion, recomiendo usar una copia.
 
@@ -381,5 +377,11 @@ Para consultas técnicas o académicas sobre este proyecto:
 - **Institución**: Fundación Universitaria Católica Lumen Gentium
 - **Semillero**: Ciencia de Datos y Machine Learning
 
+
 .. note::
    Esta documentación es un documento vivo que se actualiza conforme evoluciona el proyecto.
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
