@@ -1524,9 +1524,9 @@ FROM in_process.union_65 x
 FULL OUTER JOIN materia_66 y ON y.id_estudiante::int8 = x.id_estudiante
 ORDER BY x.id_estudiante;
 
-UPDATE in_process.union_66 SET pih_66 = 0 WHERE pih_66 IS NULL;
-UPDATE in_process.union_66 SET pnf_66 = 0 WHERE pnf_66 IS NULL;
-UPDATE in_process.union_66 SET tr_66 = 0 WHERE tr_66 IS NULL;
+UPDATE in_process.union_final SET pih_66 = 0 WHERE pih_66 IS NULL;
+UPDATE in_process.union_final SET pnf_66 = 0 WHERE pnf_66 IS NULL;
+UPDATE in_process.union_final SET tr_66 = 0 WHERE tr_66 IS NULL;
 
 -- [Liberacion de espacio]
 
