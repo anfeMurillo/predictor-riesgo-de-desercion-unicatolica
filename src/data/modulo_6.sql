@@ -1796,6 +1796,10 @@ drop view materia_65;
 
 drop view materia_66;
 
+DROP VIEW promedio_final;
+
+DROP VIEW repitencias;
+
 DROP TABLE in_process.notas_estudiantes;
 
 DROP TABLE in_process.asignaturas;
