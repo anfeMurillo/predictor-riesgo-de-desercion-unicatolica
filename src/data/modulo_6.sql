@@ -1795,3 +1795,7 @@ drop view materia_64;
 drop view materia_65;
 
 drop view materia_66;
+
+DROP TABLE in_process.notas_estudiantes;
+
+DROP TABLE in_process.asignaturas;
